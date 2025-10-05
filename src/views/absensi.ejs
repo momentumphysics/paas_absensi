@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Absensi</title>
+</head>
+<body>
+    <h1>Form Absensi</h1>
+    <% if (message) { %><p><%= message %></p><% } %>
+    <form action="/absensi" method="POST">
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama" required><br><br>
+        <label for="status">Status:</label>
+        <select id="status" name="status">
+            <option value="hadir">Hadir</option>
+            <option value="sakit">Sakit</option>
+            <option value="izin">Izin</option>
+        </select><br><br>
+        <button type="submit">Submit</button>
+    </form>
+    <a href="/">Kembali ke Home</a>
+</body>
+</html>

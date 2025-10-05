@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Pengaduan</title>
+</head>
+<body>
+    <h1>Form Pengaduan</h1>
+    <% if (message) { %><p><%= message %></p><% } %>
+    <form action="/pengaduan" method="POST">
+        <label for="subjek">Subjek:</label>
+        <input type="text" id="subjek" name="subjek" required><br><br>
+        <label for="deskripsi">Deskripsi Pengaduan:</label>
+        <textarea id="deskripsi" name="deskripsi" required></textarea><br><br>
+        <button type="submit">Kirim Pengaduan</button>
+    </form>
+    <a href="/">Kembali ke Home</a>
+</body>
+</html>

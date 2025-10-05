@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Laporan Lalu Lintas</title>
+</head>
+<body>
+    <h1>Form Laporan Lalu Lintas</h1>
+    <% if (message) { %><p><%= message %></p><% } %>
+    <form action="/laporan" method="POST">
+        <label for="lokasi">Lokasi:</label>
+        <input type="text" id="lokasi" name="lokasi" required><br><br>
+        <label for="deskripsi">Deskripsi:</label>
+        <textarea id="deskripsi" name="deskripsi" required></textarea><br><br>
+        <button type="submit">Kirim Laporan</button>
+    </form>
+    <a href="/">Kembali ke Home</a>
+</body>
+</html>
