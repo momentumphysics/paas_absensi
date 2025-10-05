@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -10,7 +9,7 @@ const port = 3000;
 // Setup koneksi database PostgreSQL
 const pool = new Pool({
   user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST || 'db', // 'db' adalah nama service di docker-compose
+  host: process.env.POSTGRES_HOST || 'db',
   database: process.env.POSTGRES_DB,
   password: process.env.POSTGRES_PASSWORD,
   port: 5432,
@@ -22,47 +21,20 @@ app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 app.use(express.static('src/public'));
 
-// Rute utama
+// Rute utama sekarang menampilkan form absensi
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('absensi', { message: '', messageType: '' });
 });
 
-// Rute untuk menampilkan form
-app.get('/absensi', (req, res) => res.render('absensi', { message: '' }));
-app.get('/laporan', (req, res) => res.render('laporan', { message: '' }));
-app.get('/pengaduan', (req, res) => res.render('pengaduan', { message: '' }));
-
-// Rute untuk memproses data form
-app.post('/absensi', async (req, res) => {
+// Rute untuk memproses data form absensi
+app.post('/', async (req, res) => {
   const { nama, status } = req.body;
   try {
     await pool.query('INSERT INTO absensi (nama, status) VALUES ($1, $2)', [nama, status]);
-    res.render('absensi', { message: 'Absensi berhasil dicatat!' });
+    res.render('absensi', { message: 'Absensi berhasil dicatat!', messageType: 'success' });
   } catch (err) {
     console.error(err);
-    res.render('absensi', { message: 'Gagal mencatat absensi.' });
-  }
-});
-
-app.post('/laporan', async (req, res) => {
-  const { lokasi, deskripsi } = req.body;
-  try {
-    await pool.query('INSERT INTO laporan_lalulintas (lokasi, deskripsi) VALUES ($1, $2)', [lokasi, deskripsi]);
-    res.render('laporan', { message: 'Laporan berhasil dikirim!' });
-  } catch (err) {
-    console.error(err);
-    res.render('laporan', { message: 'Gagal mengirim laporan.' });
-  }
-});
-
-app.post('/pengaduan', async (req, res) => {
-  const { subjek, deskripsi } = req.body;
-  try {
-    await pool.query('INSERT INTO pengaduan (subjek, deskripsi) VALUES ($1, $2)', [subjek, deskripsi]);
-    res.render('pengaduan', { message: 'Pengaduan berhasil dikirim!' });
-  } catch (err) {
-    console.error(err);
-    res.render('pengaduan', { message: 'Gagal mengirim pengaduan.' });
+    res.render('absensi', { message: 'Gagal mencatat absensi.', messageType: 'danger' });
   }
 });
 
